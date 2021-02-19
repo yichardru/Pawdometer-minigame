@@ -35,6 +35,10 @@ public class Tile : MonoBehaviour {
 
 	private bool matchFound = false;
 
+	[SerializeField]
+
+	private float colliderSize = 1;
+
 	void Awake() {
 		render = GetComponent<SpriteRenderer>();
     }
@@ -71,18 +75,9 @@ public class Tile : MonoBehaviour {
             }
             else
             {
-                if (GetAllAdjacentTiles().Contains(previousSelected.gameObject))
-                {
-					SwapSprite(previousSelected.render);
-					previousSelected.ClearAllMatches();
-					previousSelected.Deselect();
-					ClearAllMatches();
-				}
-                else
-                {
-					previousSelected.Deselect();
-					Select();
-				}
+				if (GetAllAdjacentTiles().Contains(previousSelected.gameObject))				{
+					SwapSprite(previousSelected.render);					previousSelected.Deselect();				}				else				{					previousSelected.GetComponent<Tile>().Deselect();					Select();				}
+
 			}
 		}
 	}
@@ -100,26 +95,11 @@ public class Tile : MonoBehaviour {
 		SFXManager.instance.PlaySFX(Clip.Swap);
     }
 
-	private GameObject GetAdjacent(Vector2 castDir)
-    {
-		RaycastHit2D hit = Physics2D.Raycast(transform.position, castDir);
-		if(hit.collider != null)
-        {
-			return hit.collider.gameObject;
-        }
+	private GameObject GetAdjacent(Vector2 castDir)	{		RaycastHit2D hit = Physics2D.Raycast(transform.position, castDir, 4);		foreach (var h in Physics2D.RaycastAll(transform.position, castDir, colliderSize))
+		{			if (h.collider != GetComponent<Collider2D>())
+			{				hit = h;
+			}		}		if (hit.collider != null)		{			return hit.collider.gameObject;		}		return null;	}	private List<GameObject> GetAllAdjacentTiles()	{		List<GameObject> adjacentTiles = new List<GameObject>();		for (int i = 0; i < adjacentDirections.Length; i++)		{			adjacentTiles.Add(GetAdjacent(adjacentDirections[i]));		}		return adjacentTiles;	}
 
-		return null;
-    }
-
-	private List<GameObject> GetAllAdjacentTiles()
-    {
-		List<GameObject> adjacentTiles = new List<GameObject>();
-		for(int i = 0; i < adjacentDirections.Length; i++)
-        {
-			adjacentTiles.Add(GetAdjacent(adjacentDirections[i]));
-        }
-		return adjacentTiles;
-    }
 
 	private List<GameObject> FindMatch (Vector2 castDir)
     {
