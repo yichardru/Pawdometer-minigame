@@ -35,9 +35,52 @@ public class GUIManager : MonoBehaviour {
 	public Text moveCounterTxt;
 
 	private int score;
+	[SerializeField]
+	private int moveCounter;
 
 	void Awake() {
 		instance = GetComponent<GUIManager>();
+		moveCounter = 60;
+		moveCounterTxt.text = moveCounter.ToString();
+	}
+
+	public int Score
+    {
+        get
+        {
+			return score;
+        }
+        set
+        {
+			score = value;
+			scoreTxt.text = score.ToString();
+        }
+    }
+
+	public int MoveCounter
+	{
+		get
+		{
+			return moveCounter;
+		}
+		set
+		{
+			moveCounter = value;
+			moveCounterTxt.text = moveCounter.ToString();
+			if(moveCounter <= 0)
+            {
+				moveCounter = 0;
+				StartCoroutine(WaitForShifting());
+            }
+		}
+	}
+
+	private IEnumerator WaitForShifting()
+    {
+		yield return new WaitUntil(() => !BoardManager.instance.IsShifting);
+		yield return new WaitForSeconds(.25f);
+		GameOver();
+
 	}
 
 	// Show the game over panel
