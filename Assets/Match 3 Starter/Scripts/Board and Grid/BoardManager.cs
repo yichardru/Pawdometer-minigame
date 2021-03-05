@@ -78,7 +78,7 @@ public class BoardManager : MonoBehaviour {
 			{				if (tiles[x, y].GetComponent<SpriteRenderer>().sprite == null)
 				{					yield return StartCoroutine(ShiftTilesDown(x, y));					break;				}			}		}		for (int x = 0; x < xSize; x++)
 		{			for (int y = 0; y < ySize; y++)
-			{				//tiles[x, y].GetComponent<Tile>().ClearAllMatches();			}		}	}
+			{				tiles[x, y].GetComponent<Tile>().ClearAllMatches();			}		}	}
 	private IEnumerator ShiftTilesDown(int x, int yStart, float shiftDelay = .03f)
 	{		IsShifting = true;		List<SpriteRenderer> renders = new List<SpriteRenderer>();		int nullCount = 0;		for (int y = yStart; y < ySize; y++)
 		{			SpriteRenderer render = tiles[x, y].GetComponent<SpriteRenderer>();			if (render.sprite == null)
