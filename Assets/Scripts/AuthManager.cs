@@ -26,6 +26,8 @@ public class AuthManager : MonoBehaviour
     public TMP_InputField passwordRegisterField;
     public TMP_InputField passwordRegisterVerifyField;
     public TMP_Text warningRegisterText;
+
+    private GameManager currentGM;
     
     void Awake()
     {
@@ -43,6 +45,11 @@ public class AuthManager : MonoBehaviour
                 Debug.LogError("Could not resolve all Firebase dependencies: " + dependencyStatus);
             }
         });
+    }
+
+    private void Start()
+    {
+        currentGM = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameManager>();
     }
 
     private void InitializeFirebase()
@@ -107,18 +114,19 @@ public class AuthManager : MonoBehaviour
             User = LoginTask.Result;
             Debug.LogFormat("User signed in successfully: {0} ({1})", User.DisplayName, User.Email);
             warningLoginText.text = "";
-            confirmLoginText.text = "Logged In";                    
+            confirmLoginText.text = "Logged In";
+            currentGM?.ReturnToMenu();
         }
     }
 
     private IEnumerator Register(string _email, string _password, string _username)
     {
-        if (_username == "")
-        {
+        //if (_username == "")
+        //{
             //If the username field is blank show a warning
-            warningRegisterText.text = "Missing Username";
-        }
-        else if(passwordRegisterField.text != passwordRegisterVerifyField.text)
+          //  warningRegisterText.text = "Missing Username";
+        //}
+        if(passwordRegisterField.text != passwordRegisterVerifyField.text)
         {
             //If the password does not match show a warning
             warningRegisterText.text = "Password Does Not Match!";
@@ -164,7 +172,7 @@ public class AuthManager : MonoBehaviour
                 if (User != null)
                 {
                     //Create a user profile and set the username
-                    UserProfile profile = new UserProfile{DisplayName = _username};
+                    UserProfile profile = new UserProfile{DisplayName = _email};
 
                     //Call the Firebase auth update user profile function passing the profile with the username
                     var ProfileTask = User.UpdateUserProfileAsync(profile);

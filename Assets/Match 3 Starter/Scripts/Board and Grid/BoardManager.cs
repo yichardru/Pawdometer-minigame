@@ -30,6 +30,10 @@ public class BoardManager : MonoBehaviour {
 	public GameObject tile;
 	public int xSize, ySize;
 
+	[SerializeField]
+	private int baseScoreAmount = 50;
+	public float scoreMultiplier = 1;
+
 	private GameObject[,] tiles;
 
 	public bool IsShifting { get; set; }
@@ -39,6 +43,18 @@ public class BoardManager : MonoBehaviour {
 
 		Vector2 offset = tile.GetComponent<SpriteRenderer>().bounds.size;
         CreateBoard(offset.x, offset.y);
+    }
+
+	private void VerifyScoreValues()
+    {
+		if(scoreMultiplier < 1)
+        {
+			scoreMultiplier = 1;
+        }
+		if (baseScoreAmount < 1)
+        {
+			baseScoreAmount = 10;
+        }
     }
 
 	private void CreateBoard (float xOffset, float yOffset) {
@@ -83,7 +99,7 @@ public class BoardManager : MonoBehaviour {
 	{		IsShifting = true;		List<SpriteRenderer> renders = new List<SpriteRenderer>();		int nullCount = 0;		for (int y = yStart; y < ySize; y++)
 		{			SpriteRenderer render = tiles[x, y].GetComponent<SpriteRenderer>();			if (render.sprite == null)
 			{				nullCount++;			}			renders.Add(render);		}		for (int i = 0; i < nullCount; i++)
-		{			GUIManager.instance.Score += 50; // Add this line here
+		{			GUIManager.instance.Score += (int)(baseScoreAmount * scoreMultiplier); // Add this line here
 			yield return new WaitForSeconds(shiftDelay);			for (int k = 0; k < renders.Count - 1; k++)
 			{				renders[k].sprite = renders[k + 1].sprite;				renders[k + 1].sprite = GetNewSprite(x, ySize - 1);			}		}		IsShifting = false;	}
 
