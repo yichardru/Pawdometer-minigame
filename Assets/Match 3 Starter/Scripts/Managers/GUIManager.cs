@@ -47,6 +47,24 @@ public class GUIManager : MonoBehaviour {
 		moveCounterTxt.text = moveCounter.ToString();
 	}
 
+	public void GameOver()
+    {
+		GameManager.instance.gameOver = true;
+		gameOverPanel.SetActive(true);
+
+		if(score > PlayerPrefs.GetInt("HighScore"))
+        {
+			PlayerPrefs.SetInt("HighScore", score);
+			highScoreTxt.text = "New Best: " + PlayerPrefs.GetInt("HighScore").ToString();
+			StartCoroutine(GameObject.FindGameObjectWithTag("Bridge").GetComponent<DatabaseBridge>().ChangeHighScore(score));
+        }
+        else
+        {
+			highScoreTxt.text = "Best: " + PlayerPrefs.GetInt("HighScore").ToString();
+        }
+		yourScoreTxt.text = score.ToString();
+    }
+
 	public int Score
     {
         get
@@ -84,22 +102,6 @@ public class GUIManager : MonoBehaviour {
 		yield return new WaitForSeconds(.25f);
 		GameOver();
 
-	}
-
-	// Show the game over panel
-	public void GameOver() {
-		GameManager.instance.gameOver = true;
-
-		gameOverPanel.SetActive(true);
-
-		if (score > PlayerPrefs.GetInt("HighScore")) {
-			PlayerPrefs.SetInt("HighScore", score);
-			highScoreTxt.text = "New Best: " + PlayerPrefs.GetInt("HighScore").ToString();
-		} else {
-			highScoreTxt.text = "Best: " + PlayerPrefs.GetInt("HighScore").ToString();
-		}
-
-		yourScoreTxt.text = score.ToString();
 	}
 
 }
