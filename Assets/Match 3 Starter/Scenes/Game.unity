@@ -226,7 +226,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 11402784, guid: 6a2e44e682f3ea5469046c0ccfa27945, type: 3}
       propertyPath: moveCounter
-      value: 20
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 22469296, guid: 6a2e44e682f3ea5469046c0ccfa27945, type: 3}
       propertyPath: m_LocalPosition.x

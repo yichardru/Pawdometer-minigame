@@ -57,12 +57,15 @@ public class DatabaseBridge : MonoBehaviour
 
         if (newScore > currentHighScore)
         {
+            currentHighScore = newScore;
+            print($"currentHighScore = {currentHighScore}");
             var task = dbr.Child("USERS").Child(userName).SetValueAsync(newScore);
             yield return new WaitUntil(predicate: () => task.IsCompleted);
             if (task.Exception != null)
             {
                 Debug.LogWarning($"Failed to register task with {task.Exception}");
             }
+            StartCoroutine(GetHighScore());
         }
     }
 
