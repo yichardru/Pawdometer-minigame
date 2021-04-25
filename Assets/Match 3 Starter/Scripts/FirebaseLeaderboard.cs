@@ -38,6 +38,7 @@ public class FirebaseLeaderboard : MonoBehaviour
                 Debug.Log(userInfo);
                 GameObject GO = Instantiate(scorePrefab, content);
                 GO.GetComponentInChildren<TextMeshProUGUI>().text = userInfo;
+                GO.transform.SetAsFirstSibling();
             }
             //for()
         }
