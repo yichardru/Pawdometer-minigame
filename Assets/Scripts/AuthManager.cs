@@ -3,6 +3,7 @@ using UnityEngine;
 using Firebase;
 using Firebase.Auth;
 using TMPro;
+using UnityEngine.Events;
 
 public class AuthManager : MonoBehaviour
 {
@@ -27,6 +28,10 @@ public class AuthManager : MonoBehaviour
     public TMP_InputField passwordRegisterVerifyField;
     public TMP_Text warningRegisterText;
 
+    [Header("Events")]
+    public UnityEvent OnLogin = new UnityEvent();
+
+
     private GameManager currentGM;
     
     void Awake()
@@ -49,7 +54,7 @@ public class AuthManager : MonoBehaviour
 
     private void Start()
     {
-        currentGM = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameManager>();
+        //currentGM = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameManager>();
     }
 
     private void InitializeFirebase()
@@ -115,7 +120,8 @@ public class AuthManager : MonoBehaviour
             Debug.LogFormat("User signed in successfully: {0} ({1})", User.DisplayName, User.Email);
             warningLoginText.text = "";
             confirmLoginText.text = "Logged In";
-            currentGM?.ReturnToMenu();
+            //currentGM?.ReturnToMenu();
+            OnLogin?.Invoke();
         }
     }
 
