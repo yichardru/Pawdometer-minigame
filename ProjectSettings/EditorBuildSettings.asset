@@ -17,4 +17,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Match 3 Starter/Scenes/Leaderboard.unity
     guid: 00cf154b4dbcf5b43aa47b18d6fd7570
+  - enabled: 1
+    path: Assets/Scenes/Dashboard.unity
+    guid: 8ea2a078e22236b4bb6384c3da0c6d42
   m_configObjects: {}
