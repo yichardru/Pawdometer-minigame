@@ -1,53 +1,55 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Firebase.Database;
 using Firebase.Auth;
 using TMPro;
 
-public class FirebaseLeaderboard : MonoBehaviour
+public class FBProfileManager : MonoBehaviour
 {
     private DatabaseReference dbr;
     private static bool isCurrentlyReading = false;
-    public GameObject scorePrefab;
-    public Transform content;
+    // GameObject scorePrefab;
+    //public Transform content;
+    public string userName = "testingacc3@abc_com";
 
     async void Start()
     {
         dbr = FirebaseDatabase.DefaultInstance.RootReference;
     }
 
-    public void RunDisplayScore()
+    public void Display()
     {
+        /**
         var children = new List<GameObject>();
         foreach (Transform child in content) children.Add(child.gameObject);
         children.ForEach(child => Destroy(child));
-        StartCoroutine(DisplayScores());
+        */
+        StartCoroutine(DisplayGraph());
     }
 
-    public IEnumerator DisplayScores()
+    public IEnumerator DisplayGraph()
     {
         isCurrentlyReading = true;
-        var task = dbr.Child("USERS").OrderByValue().GetValueAsync();
+        var task = dbr.Child("DATA").Child(userName).OrderByValue().GetValueAsync();
         yield return new WaitUntil(predicate: () => task.IsCompleted);
         isCurrentlyReading = false;
         if (task.Exception != null)
         {
-            //Debug.LogWarning($"Failed to register task with {task.Exception}");
+            Debug.LogWarning($"Failed to register task with {task.Exception}");
         }
         else
         {
             DataSnapshot snapshot = task.Result;
-            //List<>
-            foreach(var user in snapshot.Children)
+            Debug.Log(snapshot);
+            foreach (var data in snapshot.Children)
             {
-                string userInfo = $"{user.Key}-{user.Value}";
-                //Debug.Log(userInfo);
-                GameObject GO = Instantiate(scorePrefab, content);
-                GO.GetComponentInChildren<TextMeshProUGUI>().text = userInfo;
-                GO.transform.SetAsFirstSibling();
+                Debug.Log($"{data.Key}-{data.Value}");
+                foreach (var data2 in snapshot.Child(data.Key).Children)
+                {
+                    Debug.Log($"{data2.Key}-{data2.Value}");
+                }
             }
-            //for()
         }
 
     }
