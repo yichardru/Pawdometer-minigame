@@ -15,6 +15,13 @@ public class FirebaseLeaderboard : MonoBehaviour
     async void Start()
     {
         dbr = FirebaseDatabase.DefaultInstance.RootReference;
+    }
+
+    public void RunDisplayScore()
+    {
+        var children = new List<GameObject>();
+        foreach (Transform child in content) children.Add(child.gameObject);
+        children.ForEach(child => Destroy(child));
         StartCoroutine(DisplayScores());
     }
 
