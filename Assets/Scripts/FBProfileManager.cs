@@ -4,6 +4,7 @@ using UnityEngine;
 using Firebase.Database;
 using Firebase.Auth;
 using TMPro;
+using UnityEngine.Events;
 
 public class FBProfileManager : MonoBehaviour
 {
@@ -12,10 +13,14 @@ public class FBProfileManager : MonoBehaviour
     // GameObject scorePrefab;
     //public Transform content;
     public string userName = "testingacc3@abc_com";
+    private Dictionary<string, int> stepsDictionary = new Dictionary<string, int>();
+    public Dictionary<string, int> getSteps => stepsDictionary;
+    public UnityEvent onStepsUpdate = new UnityEvent();
 
     async void Start()
     {
         dbr = FirebaseDatabase.DefaultInstance.RootReference;
+        userName = FirebaseAuth.DefaultInstance.CurrentUser.DisplayName.Replace(".", "_");
     }
 
     public void Display()
@@ -41,15 +46,33 @@ public class FBProfileManager : MonoBehaviour
         else
         {
             DataSnapshot snapshot = task.Result;
-            Debug.Log(snapshot);
+            stepsDictionary.Clear();
             foreach (var data in snapshot.Children)
             {
-                Debug.Log($"{data.Key}-{data.Value}");
+                int stepsTotal = 0;
+                //key = date
+                //value = snapshot
+                
                 foreach (var data2 in snapshot.Child(data.Key).Children)
                 {
-                    Debug.Log($"{data2.Key}-{data2.Value}");
+                    //key = time
+                    //value = snapshot
+                    //Debug.Log($"{data2.Key}-{data2.Value}");
+                    foreach (var data3 in snapshot.Child(data.Key).Child(data2.Key).Children)
+                    {
+                        //key = steps
+                        //value = num
+                        //Debug.Log($"{data3.Key}-{data3.Value}");
+                        if (int.TryParse(data3.Value.ToString(), out int result)){
+                            stepsTotal += result;
+                        }
+                        
+                    }
                 }
+                Debug.Log($"{data.Key}:{stepsTotal}");
+                stepsDictionary[data.Key] = stepsTotal;
             }
+            onStepsUpdate?.Invoke();
         }
 
     }
