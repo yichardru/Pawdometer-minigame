@@ -23,6 +23,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
+using UnityEngine.Events;
 
 public class GUIManager : MonoBehaviour {
 	public static GUIManager instance;
@@ -33,6 +34,8 @@ public class GUIManager : MonoBehaviour {
 
 	public Text scoreTxt;
 	public Text moveCounterTxt;
+
+	public UnityEvent OnGameOver;
 
 	private int score;
 	[SerializeField]
@@ -46,6 +49,8 @@ public class GUIManager : MonoBehaviour {
         }
 		moveCounterTxt.text = moveCounter.ToString();
 	}
+
+	
 
 	public void GameOver()
     {
@@ -63,6 +68,7 @@ public class GUIManager : MonoBehaviour {
 			highScoreTxt.text = "Best: " + PlayerPrefs.GetInt("HighScore").ToString();
         }
 		yourScoreTxt.text = score.ToString();
+		OnGameOver?.Invoke();
     }
 
 	public int Score
