@@ -98,6 +98,11 @@ public class GameManager : MonoBehaviour {
 		isReturning = false;
     }
 
+	public static void LoadImmediate(string sceneName)
+    {
+		SceneManager.LoadScene(sceneName);
+    }
+
 	// Allows the scene to change once it is loaded
 	public void ActivateScene() {
 		async.allowSceneActivation = true;

@@ -11,6 +11,7 @@ public class ProfileDisplay : MonoBehaviour
     public TextMeshProUGUI userProfileText;
     public GameObject logInButton;
     public GameObject logOutButton;
+    public bool ActiveButton = false;
 
     void Start()
     {
@@ -20,12 +21,12 @@ public class ProfileDisplay : MonoBehaviour
         {
             userProfileText.text = "Not Logged In";
             logInButton.SetActive(true);
-            logOutButton.SetActive(false);
+            logOutButton.SetActive(ActiveButton);
         }
         else
         {
             userProfileText.text = $"Logged as: {user.DisplayName}";
-            logInButton.SetActive(false);
+            logInButton.SetActive(ActiveButton);
             logOutButton.SetActive(true);
 
             DatabaseReference database = FirebaseDatabase.DefaultInstance.RootReference;
@@ -38,6 +39,7 @@ public class ProfileDisplay : MonoBehaviour
         FirebaseAuth.DefaultInstance.SignOut();
         userProfileText.text = "Not Logged In";
         logInButton.SetActive(true);
-        logOutButton.SetActive(false);
+        logOutButton.SetActive(ActiveButton);
+         
     }
 }
