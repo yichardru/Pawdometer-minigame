@@ -1,7 +1,5 @@
 {
   "dependencies": {
-    "com.google.firebase.app": "7.0.2",
-    "com.google.firebase.database": "7.0.2",
     "com.unity.2d.animation": "6.0.5",
     "com.unity.2d.common": "5.0.0",
     "com.unity.2d.pixel-perfect": "5.0.1",
