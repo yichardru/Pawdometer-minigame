@@ -1,0 +1,19 @@
+{
+    "name": "Proyecto26",
+    "rootNamespace": "",
+    "references": [
+        "GUID:31cf0f2f27b2d854880d03510cb5eede"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [
+        "Android",
+        "iOS"
+    ],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

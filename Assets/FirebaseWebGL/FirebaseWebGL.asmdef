@@ -1,0 +1,22 @@
+{
+    "name": "FirebaseWebGL",
+    "rootNamespace": "",
+    "references": [
+        "GUID:6055be8ebefd69e48b49212b09b47b2f",
+        "GUID:054231e2400726c4abe2ee763c360eec",
+        "GUID:31cf0f2f27b2d854880d03510cb5eede",
+        "GUID:bd4d32d8072b3da449fcc8cc8b184126"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [
+        "Android",
+        "iOS"
+    ],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

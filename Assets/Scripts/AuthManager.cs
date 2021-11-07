@@ -1,9 +1,15 @@
 ﻿using System.Collections;
 using UnityEngine;
-using Firebase;
-using Firebase.Auth;
 using TMPro;
 using UnityEngine.Events;
+//#if UNITY_WEBGL
+//using FirebaseWebGL.Scripts.FirebaseBridge;
+//using FirebaseWebGL.Scripts.Objects;
+
+//#else
+using Firebase;
+using Firebase.Auth;
+//#endif
 
 public class AuthManager : MonoBehaviour
 {
