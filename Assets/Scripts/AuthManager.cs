@@ -2,7 +2,7 @@
 using UnityEngine;
 using TMPro;
 using UnityEngine.Events;
-#if UNITY_WEBGL
+#if (UNITY_WEBGL && !UNITY_EDITOR)
 using FirebaseWebGL.Scripts.FirebaseBridge;
 using FirebaseWebGL.Scripts.Objects;
 
@@ -13,7 +13,7 @@ using Firebase.Auth;
 
 public class AuthManager : MonoBehaviour
 {
-    #if UNITY_WEBGL
+    #if (UNITY_WEBGL && !UNITY_EDITOR)
     #else
     //Firebase variables
     [Header("Firebase")]
@@ -45,8 +45,8 @@ public class AuthManager : MonoBehaviour
     
     void Awake()
     {
-        #if UNITY_WEBGL
-        #else
+    #if (UNITY_WEBGL && !UNITY_EDITOR)
+    #else
         //Check that all of the necessary dependencies for Firebase are present on the system
         FirebaseApp.CheckAndFixDependenciesAsync().ContinueWith(task =>
         {
@@ -72,8 +72,8 @@ public class AuthManager : MonoBehaviour
     private void InitializeFirebase()
     {
         Debug.Log("Setting up Firebase Auth");
-        #if UNITY_WEBGL
-        #else
+    #if (UNITY_WEBGL && !UNITY_EDITOR)
+    #else
         //Set the authentication instance object
         auth = FirebaseAuth.DefaultInstance;
         #endif
@@ -83,9 +83,9 @@ public class AuthManager : MonoBehaviour
     public void LoginButton()
     {
         //Call the login coroutine passing the email and password
-        #if UNITY_WEBGL
+    #if (UNITY_WEBGL && !UNITY_EDITOR)
         FirebaseAuth.SignInWithEmailAndPassword(emailLoginField.text, passwordLoginField.text, gameObject.name, "Success", "Failure");
-        #else
+    #else
         StartCoroutine(Login(emailLoginField.text, passwordLoginField.text));
         #endif
     }
@@ -93,13 +93,13 @@ public class AuthManager : MonoBehaviour
     public void RegisterButton()
     {
         //Call the register coroutine passing the email, password, and username
-        #if UNITY_WEBGL
+    #if (UNITY_WEBGL && !UNITY_EDITOR)
         FirebaseAuth.CreateUserWithEmailAndPassword(emailRegisterField.text, passwordRegisterField.text, gameObject.name, "Success", "Failure");
-        #else
+    #else
         StartCoroutine(Register(emailRegisterField.text, passwordRegisterField.text, usernameRegisterField.text));
         #endif
     }
-    #if UNITY_WEBGL
+    #if (UNITY_WEBGL && !UNITY_EDITOR)
     void Success(string output)
     {
 
