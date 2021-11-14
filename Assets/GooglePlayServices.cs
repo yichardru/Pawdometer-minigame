@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class GooglePlayServices : MonoBehaviour
 {
+    #if UNITY_WEBGL
+    #else
     void Awake()
     {
         Firebase.FirebaseApp.CheckAndFixDependenciesAsync().ContinueWith(task => {
@@ -25,4 +27,5 @@ public class GooglePlayServices : MonoBehaviour
         });
 
     }
+    #endif
 }

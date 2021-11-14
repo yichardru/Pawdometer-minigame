@@ -57,5 +57,8 @@ namespace FirebaseWebGL.Scripts.FirebaseBridge
         [DllImport("__Internal")]
         public static extern void OnAuthStateChanged(string objectName, string onUserSignedIn,
             string onUserSignedOut);
+
+        [DllImport("__Internal")]
+        public static extern void SignOut();
     }
 }

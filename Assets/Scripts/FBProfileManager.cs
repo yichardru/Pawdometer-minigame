@@ -1,13 +1,21 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+#if UNITY_WEBGL
+#else
 using Firebase.Database;
 using Firebase.Auth;
+#endif
 using TMPro;
 using UnityEngine.Events;
 
 public class FBProfileManager : MonoBehaviour
 {
+    #if UNITY_WEBGL
+    public UnityEvent onStepsUpdate;
+    public Dictionary<string, double> getSteps = new Dictionary<string, double>();
+
+    #else
     private DatabaseReference dbr;
     private static bool isCurrentlyReading = false;
     // GameObject scorePrefab;
@@ -76,4 +84,5 @@ public class FBProfileManager : MonoBehaviour
         }
 
     }
+    #endif
 }

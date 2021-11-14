@@ -1,12 +1,17 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+#if UNITY_WEBGL
+#else
 using Firebase.Database;
 using Firebase.Auth;
+#endif
 using TMPro;
 
 public class FirebaseLeaderboard : MonoBehaviour
 {
+    #if UNITY_WEBGL
+    #else
     private DatabaseReference dbr;
     private static bool isCurrentlyReading = false;
     public GameObject scorePrefab;
@@ -51,4 +56,5 @@ public class FirebaseLeaderboard : MonoBehaviour
         }
 
     }
+    #endif
 }

@@ -2,22 +2,25 @@
 using UnityEngine;
 using TMPro;
 using UnityEngine.Events;
-//#if UNITY_WEBGL
-//using FirebaseWebGL.Scripts.FirebaseBridge;
-//using FirebaseWebGL.Scripts.Objects;
+#if UNITY_WEBGL
+using FirebaseWebGL.Scripts.FirebaseBridge;
+using FirebaseWebGL.Scripts.Objects;
 
-//#else
+#else
 using Firebase;
 using Firebase.Auth;
-//#endif
+#endif
 
 public class AuthManager : MonoBehaviour
 {
+    #if UNITY_WEBGL
+    #else
     //Firebase variables
     [Header("Firebase")]
     public DependencyStatus dependencyStatus;
     public FirebaseAuth auth;    
     public FirebaseUser User;
+    #endif
 
     //Login variables
     [Header("Login")]
@@ -42,6 +45,8 @@ public class AuthManager : MonoBehaviour
     
     void Awake()
     {
+        #if UNITY_WEBGL
+        #else
         //Check that all of the necessary dependencies for Firebase are present on the system
         FirebaseApp.CheckAndFixDependenciesAsync().ContinueWith(task =>
         {
@@ -56,6 +61,7 @@ public class AuthManager : MonoBehaviour
                 Debug.LogError("Could not resolve all Firebase dependencies: " + dependencyStatus);
             }
         });
+        #endif
     }
 
     private void Start()
@@ -66,23 +72,43 @@ public class AuthManager : MonoBehaviour
     private void InitializeFirebase()
     {
         Debug.Log("Setting up Firebase Auth");
+        #if UNITY_WEBGL
+        #else
         //Set the authentication instance object
         auth = FirebaseAuth.DefaultInstance;
+        #endif
     }
     
     //Function for the login button
     public void LoginButton()
     {
         //Call the login coroutine passing the email and password
+        #if UNITY_WEBGL
+        FirebaseAuth.SignInWithEmailAndPassword(emailLoginField.text, passwordLoginField.text, gameObject.name, "Success", "Failure");
+        #else
         StartCoroutine(Login(emailLoginField.text, passwordLoginField.text));
+        #endif
     }
     //Function for the register button
     public void RegisterButton()
     {
         //Call the register coroutine passing the email, password, and username
+        #if UNITY_WEBGL
+        FirebaseAuth.CreateUserWithEmailAndPassword(emailRegisterField.text, passwordRegisterField.text, gameObject.name, "Success", "Failure");
+        #else
         StartCoroutine(Register(emailRegisterField.text, passwordRegisterField.text, usernameRegisterField.text));
+        #endif
     }
+    #if UNITY_WEBGL
+    void Success(string output)
+    {
 
+    }
+    void Failure(string output)
+    {
+
+    }
+    #else
     private IEnumerator Login(string _email, string _password)
     {
         //Call the Firebase auth signin function passing the email and password
@@ -208,4 +234,5 @@ public class AuthManager : MonoBehaviour
             }
         }
     }
+    #endif
 }

@@ -89,5 +89,17 @@ mergeInto(LibraryManager.library, {
             }
         });
 
+    },
+
+    SignOut: function (objectName, callback, fallback) {
+        var parsedObjectName = Pointer_stringify(objectName);
+        var parsedCallback = Pointer_stringify(callback);
+        var parsedFallback = Pointer_stringify(fallback);
+
+        firebase.auth().signOut().then(function (unused) {
+            unityInstance.Module.SendMessage(parsedObjectName, parsedCallback, "User has been signed out");
+        }).catch(function (error) {
+            unityInstance.Module.SendMessage(parsedObjectName, parsedFallback, JSON.stringify(error, Object.getOwnPropertyNames(error)));
+        });
     }
 });

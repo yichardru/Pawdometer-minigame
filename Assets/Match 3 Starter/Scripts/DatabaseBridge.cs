@@ -1,11 +1,20 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+#if UNITY_WEBGL
+#else
 using Firebase.Database;
 using Firebase.Auth;
+#endif
 
 public class DatabaseBridge : MonoBehaviour
 {
+    #if UNITY_WEBGL
+    public IEnumerator ChangeHighScore(int score)
+    {
+        yield return null;
+    }
+    #else
     private DatabaseReference dbr;
     public static int currentHighScore;
     public FirebaseUser user;
@@ -73,4 +82,5 @@ public class DatabaseBridge : MonoBehaviour
     {
         return 0;
     }
+    #endif
 }

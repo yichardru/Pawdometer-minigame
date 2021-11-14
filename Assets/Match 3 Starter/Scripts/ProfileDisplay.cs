@@ -2,12 +2,17 @@
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+#if UNITY_WEBGL
+#else
 using Firebase;
 using Firebase.Auth;
 using Firebase.Database;
+#endif
 
 public class ProfileDisplay : MonoBehaviour
 {
+    #if UNITY_WEBGL
+    #else
     public TextMeshProUGUI userProfileText;
     public GameObject logInButton;
     public GameObject logOutButton;
@@ -42,4 +47,5 @@ public class ProfileDisplay : MonoBehaviour
         logOutButton.SetActive(ActiveButton);
          
     }
+    #endif
 }
