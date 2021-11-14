@@ -59,6 +59,6 @@ namespace FirebaseWebGL.Scripts.FirebaseBridge
             string onUserSignedOut);
 
         [DllImport("__Internal")]
-        public static extern void SignOut();
+        public static extern void SignOut(string objectName, string callback, string fallback);
     }
 }
