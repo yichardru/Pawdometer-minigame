@@ -101,5 +101,13 @@ mergeInto(LibraryManager.library, {
         }).catch(function (error) {
             unityInstance.Module.SendMessage(parsedObjectName, parsedFallback, JSON.stringify(error, Object.getOwnPropertyNames(error)));
         });
+    },
+
+    GetUser: function () {
+        const user = firebase.auth().currentUser;
+        if (user !== null){
+            return user.displayName;
+        }
+        return "";
     }
 });

@@ -22,11 +22,15 @@ public class ProfileDisplay : MonoBehaviour
     void Start()
     {
     #if (UNITY_WEBGL && !UNITY_EDITOR)
+    string username = FirebaseAuth.GetUser();
+    failure(username);
+    UpdateUI(username != "", username);
     #else
         FirebaseUser user  = FirebaseAuth.DefaultInstance.CurrentUser;
-    
+
         //Is user empty?
-        if (user == null || user.DisplayName == "")
+        UpdateUI(user != null && user.DisplayName != "", user?.DisplayName);
+        /*if (user == null || user.DisplayName == "")
         {
             userProfileText.text = "Not Logged In";
             logInButton.SetActive(true);
@@ -38,10 +42,26 @@ public class ProfileDisplay : MonoBehaviour
             logInButton.SetActive(ActiveButton);
             logOutButton.SetActive(true);
 
-            DatabaseReference database = FirebaseDatabase.DefaultInstance.RootReference;
-            Debug.Log($"{database.ToString()}");
-        }
+            //DatabaseReference database = FirebaseDatabase.DefaultInstance.RootReference;
+            //Debug.Log($"{database.ToString()}");
+        }*/
     #endif
+    }
+
+    private void UpdateUI(bool isLoggedIn, string username = "")
+    {
+        if (isLoggedIn)
+        {
+            userProfileText.text = $"Logged as: {username}";
+            logInButton.SetActive(ActiveButton);
+            logOutButton.SetActive(true);
+        }
+        else
+        {
+            userProfileText.text = "Not Logged In";
+            logInButton.SetActive(true);
+            logOutButton.SetActive(ActiveButton);
+        }
     }
 
     public void SignOut()
@@ -51,9 +71,10 @@ public class ProfileDisplay : MonoBehaviour
         #else
         FirebaseAuth.DefaultInstance.SignOut();
         #endif
-        userProfileText.text = "Not Logged In";
+        UpdateUI(false);
+       /* userProfileText.text = "Not Logged In";
         logInButton.SetActive(true);
-        logOutButton.SetActive(ActiveButton);
+        logOutButton.SetActive(ActiveButton);*/
          
     }
 
