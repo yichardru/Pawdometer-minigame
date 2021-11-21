@@ -62,3 +62,4 @@ Assets/StreamingAssets/google-services-desktop.json
 Assets/google-services.json
 Assets/Firebase/Plugins/x86_64/FirebaseCppApp-8_5_0.so
 .DS_Store
+FirebaseWebGLTest/
