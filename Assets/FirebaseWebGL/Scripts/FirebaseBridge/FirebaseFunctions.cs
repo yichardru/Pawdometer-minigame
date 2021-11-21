@@ -34,5 +34,11 @@ namespace FirebaseWebGL.Scripts.FirebaseBridge
 
         [DllImport("__Internal")]
         private static extern string GetCurrentProjectId();
+
+        [DllImport("__Internal")]
+        public static extern void PrintToConsole(string value);
+
+        [DllImport("__Internal")]
+        public static extern void PrintToAlert(string value);
     }
 }

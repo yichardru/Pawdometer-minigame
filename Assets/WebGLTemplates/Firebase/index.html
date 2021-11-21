@@ -126,27 +126,30 @@
         });
       };
       document.body.appendChild(script);
-    </script>
-    <script type="module">
-  // Import the functions you need from the SDKs you need
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/9.4.1/firebase-app.js";
-  // TODO: Add SDKs for Firebase products that you want to use
-  // https://firebase.google.com/docs/web/setup#available-libraries
+    </script> 
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
-    // Your web app's Firebase configuration
-    const firebaseConfig = {
-    apiKey: "AIzaSyA0gfdODFyCIVDntjvYsFKu_vxuhDadwWE",
-    authDomain: "thunkable-3c1e0.firebaseapp.com",
-    databaseURL: "https://thunkable-3c1e0.firebaseio.com",
-    projectId: "thunkable-3c1e0",
-    storageBucket: "thunkable-3c1e0.appspot.com",
-    messagingSenderId: "1093598671684",
-    appId: "1:1093598671684:web:864559e1ad7645dfe5dd11"
-    };
-
-    // Initialize Firebase
-    const app = initializeApp(firebaseConfig);
+    <script>
+      // Import the functions you need from the SDKs you need
+      // TODO: Add SDKs for Firebase products that you want to use
+      // https://firebase.google.com/docs/web/setup#available-libraries
+    
+      // Your web app's Firebase configuration
+      const firebaseConfig = {
+        apiKey: "AIzaSyA0gfdODFyCIVDntjvYsFKu_vxuhDadwWE",
+        authDomain: "thunkable-3c1e0.firebaseapp.com",
+        databaseURL: "https://thunkable-3c1e0.firebaseio.com",
+        projectId: "thunkable-3c1e0",
+        storageBucket: "thunkable-3c1e0.appspot.com",
+        messagingSenderId: "1093598671684",
+        appId: "1:1093598671684:web:864559e1ad7645dfe5dd11"
+      };
+    
+      // Initialize Firebase
+      const app = firebase.initializeApp(firebaseConfig);
+      // const database = app.database();
     </script>
+
   </body>
 </html>

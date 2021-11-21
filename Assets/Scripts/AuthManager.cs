@@ -84,7 +84,7 @@ public class AuthManager : MonoBehaviour
     {
         //Call the login coroutine passing the email and password
     #if (UNITY_WEBGL && !UNITY_EDITOR)
-        FirebaseAuth.SignInWithEmailAndPassword(emailLoginField.text, passwordLoginField.text, gameObject.name, "Success", "Failure");
+        FirebaseAuth.SignInWithEmailAndPassword(emailLoginField.text, passwordLoginField.text, gameObject.name, "OnLoginSucess", "Failure");
     #else
         StartCoroutine(Login(emailLoginField.text, passwordLoginField.text));
         #endif
@@ -102,11 +102,13 @@ public class AuthManager : MonoBehaviour
     #if (UNITY_WEBGL && !UNITY_EDITOR)
     void Success(string output)
     {
-
+        //FirebaseWebGL.Scripts.FirebaseBridge.FirebaseFunctions.PrintToAlert(output);
+        FirebaseWebGL.Scripts.FirebaseBridge.FirebaseFunctions.PrintToConsole(output);
     }
     void Failure(string output)
     {
-
+        FirebaseWebGL.Scripts.FirebaseBridge.FirebaseFunctions.PrintToAlert(output);
+        FirebaseWebGL.Scripts.FirebaseBridge.FirebaseFunctions.PrintToConsole(output);
     }
     #else
     private IEnumerator Login(string _email, string _password)
@@ -153,7 +155,7 @@ public class AuthManager : MonoBehaviour
             warningLoginText.text = "";
             confirmLoginText.text = "Logged In";
             //currentGM?.ReturnToMenu();
-            OnLogin?.Invoke();
+            OnLoginSucess();
         }
     }
 
@@ -235,4 +237,8 @@ public class AuthManager : MonoBehaviour
         }
     }
     #endif
+    private void OnLoginSucess()
+    {
+        OnLogin?.Invoke();
+    }
 }
