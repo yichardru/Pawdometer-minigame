@@ -94,7 +94,7 @@ public class AuthManager : MonoBehaviour
     {
         //Call the register coroutine passing the email, password, and username
     #if (UNITY_WEBGL && !UNITY_EDITOR)
-        FirebaseAuth.CreateUserWithEmailAndPassword(emailRegisterField.text, passwordRegisterField.text, gameObject.name, "Success", "Failure");
+        FirebaseAuth.CreateUserWithEmailAndPassword(emailRegisterField.text, passwordRegisterField.text, gameObject.name, "OnRegisterSuccess", "Failure");
     #else
         StartCoroutine(Register(emailRegisterField.text, passwordRegisterField.text, usernameRegisterField.text));
         #endif
@@ -229,15 +229,21 @@ public class AuthManager : MonoBehaviour
                     {
                         //Username is now set
                         //Now return to login screen
-                        UIManager.instance.LoginScreen();                        
-                        warningRegisterText.text = "";
+                        OnRegisterSuccess();
                     }
                 }
             }
         }
     }
     #endif
-    private void OnLoginSucess()
+
+    private void OnRegisterSuccess(string output = "")
+    {
+        UIManager.instance.LoginScreen();                        
+        warningRegisterText.text = "";
+    }
+
+    private void OnLoginSucess(string output = "")
     {
         OnLogin?.Invoke();
     }
