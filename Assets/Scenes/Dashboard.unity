@@ -2656,6 +2656,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3fe76c3d5aa93ca49bb12bb1a754e755, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  scorePrefab: {fileID: 1879445940651037232, guid: 829cd42e5df49e047a3a4afb1ba6859d,
+    type: 3}
+  content: {fileID: 1614292141}
 --- !u!114 &682458925
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9117,7 +9120,7 @@ GameObject:
   - component: {fileID: 1614292143}
   - component: {fileID: 1614292142}
   m_Layer: 5
-  m_Name: Content
+  m_Name: ScoreContent
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
