@@ -2656,7 +2656,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3fe76c3d5aa93ca49bb12bb1a754e755, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  scorePrefab: {fileID: 1879445940651037232, guid: 829cd42e5df49e047a3a4afb1ba6859d,
+  scorePrefab: {fileID: 3731120941245336937, guid: d4fef52300f94a04b80c64d795fe41e8,
     type: 3}
   content: {fileID: 1614292141}
 --- !u!114 &682458925

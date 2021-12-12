@@ -36,7 +36,7 @@ public class FirebaseLeaderboard : MonoBehaviour
     public IEnumerator DisplayScores()
     {
 #if (UNITY_WEBGL && !UNITY_EDITOR)
-    FirebaseDatabase.GetJSON(FirebaseUtility.databaseURL+"/USERS", this.gameObject.name, "ParseUserData", "Failure");
+    FirebaseDatabase.GetJSON("USERS", this.gameObject.name, "ParseUserData", "Failure");
     yield break;
 #else
         isCurrentlyReading = true;
@@ -68,6 +68,7 @@ public void ParseUserData(string json)
         foreach (var UserName in User.Keys)
         {
             GenerateScoreInfo(UserName, User.GetValueOrDefault(UserName, null)?.ToString()??"0");
+            FirebaseWebGL.Scripts.FirebaseBridge.FirebaseFunctions.PrintToAlert(UserName);
         }
     }
 }
