@@ -63,14 +63,13 @@ public class FirebaseLeaderboard : MonoBehaviour
 public void ParseUserData(string json)
 {
     var snapshot = JSON.Parse(json);
-    foreach (var User in snapshot.Children)
+    FirebaseWebGL.Scripts.FirebaseBridge.FirebaseFunctions.PrintToAlert("Part 1: " + snapshot.ToString());
+    foreach (var User in snapshot.Keys)
     {
-        foreach (var UserName in User.Keys)
-        {
-            string Score = User.GetValueOrDefault(UserName, null)?.ToString()??"0";
-            GenerateScoreInfo(UserName, Score);
-            FirebaseWebGL.Scripts.FirebaseBridge.FirebaseFunctions.PrintToAlert(UserName + ": " + Score);
-        }
+        FirebaseWebGL.Scripts.FirebaseBridge.FirebaseFunctions.PrintToAlert("Part 2: " + User);
+        string Score = snapshot.GetValueOrDefault(User, null)?.ToString()??"0";
+        GenerateScoreInfo(User, Score);
+        FirebaseWebGL.Scripts.FirebaseBridge.FirebaseFunctions.PrintToAlert(User + ": " + Score);
     }
 }
 #endif
