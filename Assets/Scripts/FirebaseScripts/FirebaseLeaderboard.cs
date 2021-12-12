@@ -67,8 +67,9 @@ public void ParseUserData(string json)
     {
         foreach (var UserName in User.Keys)
         {
-            GenerateScoreInfo(UserName, User.GetValueOrDefault(UserName, null)?.ToString()??"0");
-            FirebaseWebGL.Scripts.FirebaseBridge.FirebaseFunctions.PrintToAlert(UserName);
+            string Score = User.GetValueOrDefault(UserName, null)?.ToString()??"0";
+            GenerateScoreInfo(UserName, Score);
+            FirebaseWebGL.Scripts.FirebaseBridge.FirebaseFunctions.PrintToAlert(UserName + ": " + Score);
         }
     }
 }
