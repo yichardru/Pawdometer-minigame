@@ -68,7 +68,7 @@ public class FBProfileManager : MonoBehaviour
                 }
             }
             //TODO: add date and totalsteps to dictionary
-            stepsDictionary[data.Key] = stepsTotal;
+            stepsDictionary["DATA GOES HERE"] = totalsteps;
         }
         onStepsUpdate?.Invoke();
 
