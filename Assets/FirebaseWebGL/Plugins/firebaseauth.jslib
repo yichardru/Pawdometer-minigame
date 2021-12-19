@@ -103,19 +103,27 @@ mergeInto(LibraryManager.library, {
         });
     },
 
-    GetUser: function () {
+    GetUser: function (objectName, callback, fallback) {
+        var parsedObjectName = Pointer_stringify(objectName);
+        var parsedCallback = Pointer_stringify(callback);
+        var parsedFallback = Pointer_stringify(fallback);
         const user = firebase.auth().currentUser;
         if (user !== null){
-            return user.displayName;
+            unityInstance.Module.SendMessage(parsedObjectName, parsedCallback, JSON.stringify(user.displayName));
+            return JSON.stringify(user.displayName);
         }
-        return "";
+        return "No User Found";
     },
 
-    GetUserEmail: function () {
+    GetUserEmail: function (objectName, callback, fallback) {
+        var parsedObjectName = Pointer_stringify(objectName);
+        var parsedCallback = Pointer_stringify(callback);
+        var parsedFallback = Pointer_stringify(fallback);
         const user = firebase.auth().currentUser;
         if (user !== null){
-            return user.email;
+            unityInstance.Module.SendMessage(parsedObjectName, parsedCallback, JSON.stringify(user.email));
+            return JSON.stringify(user.email);
         }
-        return "";
+        return "No User Found";
     }
 });

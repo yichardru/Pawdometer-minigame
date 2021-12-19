@@ -51,7 +51,8 @@ public class FBProfileManager : MonoBehaviour
     #if (UNITY_WEBGL && !UNITY_EDITOR)
     public void ParseUserData(string json)
     {
-
+        var snapshot = JSON.Parse(json);
+        FirebaseWebGL.Scripts.FirebaseBridge.FirebaseFunctions.PrintToAlert("Part 1: " + snapshot.ToString());
     }
 
     public void Failure(string error)
@@ -78,17 +79,17 @@ public class FBProfileManager : MonoBehaviour
             foreach (var data in snapshot.Children)
             {
                 int stepsTotal = 0;
-                //key = date
+                //key = "date"
                 //value = snapshot
                 
                 foreach (var data2 in snapshot.Child(data.Key).Children)
                 {
-                    //key = time
+                    //key = "time"
                     //value = snapshot
                     //Debug.Log($"{data2.Key}-{data2.Value}");
                     foreach (var data3 in snapshot.Child(data.Key).Child(data2.Key).Children)
                     {
-                        //key = steps
+                        //key = "steps"
                         //value = num
                         //Debug.Log($"{data3.Key}-{data3.Value}");
                         if (int.TryParse(data3.Value.ToString(), out int result)){

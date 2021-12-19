@@ -62,9 +62,9 @@ namespace FirebaseWebGL.Scripts.FirebaseBridge
         public static extern void SignOut(string objectName, string callback, string fallback);
 
         [DllImport("__Internal")]
-        public static extern string GetUser();
+        public static extern string GetUser(string objectName, string callback, string fallback);
 
         [DllImport("__Internal")]
-        public static extern string GetUserEmail();
+        public static extern string GetUserEmail(string objectName, string callback, string fallback);
     }
 }
