@@ -109,5 +109,13 @@ mergeInto(LibraryManager.library, {
             return user.displayName;
         }
         return "";
+    },
+
+    GetUserEmail: function () {
+        const user = firebase.auth().currentUser;
+        if (user !== null){
+            return user.email;
+        }
+        return "";
     }
 });

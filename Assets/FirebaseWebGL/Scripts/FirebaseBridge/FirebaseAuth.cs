@@ -63,5 +63,8 @@ namespace FirebaseWebGL.Scripts.FirebaseBridge
 
         [DllImport("__Internal")]
         public static extern string GetUser();
+
+        [DllImport("__Internal")]
+        public static extern string GetUserEmail();
     }
 }
