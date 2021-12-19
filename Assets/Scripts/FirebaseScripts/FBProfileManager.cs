@@ -58,7 +58,16 @@ public class FBProfileManager : MonoBehaviour
     public void ParseUserData(string json)
     {
         var snapshot = JSON.Parse(json);
-        FirebaseWebGL.Scripts.FirebaseBridge.FirebaseFunctions.PrintToAlert("Part 1: " + snapshot.ToString());
+        FirebaseWebGL.Scripts.FirebaseBridge.FirebaseFunctions.PrintToAlert("Full User Data: " + snapshot.ToString());
+        foreach (var date in snapshot.Keys){
+            foreach (var time in snapshot.Keys){
+                int totalsteps = 0;
+                foreach (var steps in snapshot.Keys){
+                    //TODO: add currentsteps to totalsteps
+                }
+            }
+            //TODO: add date and totalsteps to dictionary
+        }
     }
 
     public void Failure(string error)
@@ -67,7 +76,7 @@ public class FBProfileManager : MonoBehaviour
     }
 
 
-    #else
+#else
     public IEnumerator DisplayGraph()
     {
         isCurrentlyReading = true;

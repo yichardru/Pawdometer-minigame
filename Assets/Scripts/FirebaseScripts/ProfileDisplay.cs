@@ -21,12 +21,12 @@ public class ProfileDisplay : MonoBehaviour
 
     void Start()
     {
-    #if (UNITY_WEBGL && !UNITY_EDITOR)
+#if (UNITY_WEBGL && !UNITY_EDITOR)
     // string username = FirebaseAuth.GetUser();
-    FirebaseAuth.GetUser(gameObject.name,"failure", "success");
+    FirebaseAuth.GetUser(gameObject.name, "UpdateUserString", "failure");
     //failure(username);
     // UpdateUI(username != "", username);
-    #else
+#else
         FirebaseUser user  = FirebaseAuth.DefaultInstance.CurrentUser;
 
         //Is user empty?
@@ -47,6 +47,11 @@ public class ProfileDisplay : MonoBehaviour
             //Debug.Log($"{database.ToString()}");
         }*/
     #endif
+    }
+
+    public void UpdateUserString(string username)
+    {
+        UpdateUI(username != "", username);
     }
 
     private void UpdateUI(bool isLoggedIn, string username = "")
@@ -85,6 +90,7 @@ public class ProfileDisplay : MonoBehaviour
     {
         //FirebaseWebGL.Scripts.FirebaseBridge.FirebaseFunctions.PrintToAlert(output);
         FirebaseWebGL.Scripts.FirebaseBridge.FirebaseFunctions.PrintToConsole(output);
+
     }
     void failure(string output)
     {
