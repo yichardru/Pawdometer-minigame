@@ -10,6 +10,7 @@ using Firebase.Auth;
 #endif
 using TMPro;
 using UnityEngine.Events;
+using SimpleJSON;
 
 public class FBProfileManager : MonoBehaviour
 {
@@ -22,8 +23,13 @@ public class FBProfileManager : MonoBehaviour
     public UnityEvent onStepsUpdate = new UnityEvent();
     #if (UNITY_WEBGL && !UNITY_EDITOR)
     void Start(){
-        userName = FirebaseAuth.GetUser().Replace(".", "_");
-        FirebaseFunctions.PrintToAlert($"USER: {FirebaseAuth.GetUser().Replace(".", "_")}\nEMAIL:{FirebaseAuth.GetUserEmail().Replace(".", "_")}");
+        FirebaseAuth.GetUser(this.name, "SetUserName", "X").Replace(".", "_");
+        FirebaseFunctions.PrintToAlert($"USER: {FirebaseAuth.GetUser(this.name, "Y", "X").Replace(".", "_")}\nEMAIL:{FirebaseAuth.GetUserEmail(this.name, "Y", "X").Replace(".", "_")}");
+    }
+
+    public void SetUserName(string name)
+    {
+        userName = userName;
     }
     #else
     private DatabaseReference dbr;

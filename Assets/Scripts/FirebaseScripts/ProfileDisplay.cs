@@ -22,9 +22,10 @@ public class ProfileDisplay : MonoBehaviour
     void Start()
     {
     #if (UNITY_WEBGL && !UNITY_EDITOR)
-    string username = FirebaseAuth.GetUser();
-    failure(username);
-    UpdateUI(username != "", username);
+    // string username = FirebaseAuth.GetUser();
+    FirebaseAuth.GetUser(gameObject.name,"failure", "success");
+    //failure(username);
+    // UpdateUI(username != "", username);
     #else
         FirebaseUser user  = FirebaseAuth.DefaultInstance.CurrentUser;
 
