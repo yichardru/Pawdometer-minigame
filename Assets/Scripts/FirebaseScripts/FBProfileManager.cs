@@ -21,17 +21,18 @@ public class FBProfileManager : MonoBehaviour
     private Dictionary<string, int> stepsDictionary = new Dictionary<string, int>();
     public Dictionary<string, int> getSteps => stepsDictionary;
     public UnityEvent onStepsUpdate = new UnityEvent();
-    #if (UNITY_WEBGL && !UNITY_EDITOR)
+#if (UNITY_WEBGL && !UNITY_EDITOR)
     void Start(){
         FirebaseAuth.GetUser(this.name, "SetUserName", "X").Replace(".", "_");
-        FirebaseFunctions.PrintToAlert($"USER: {FirebaseAuth.GetUser(this.name, "Y", "X").Replace(".", "_")}\nEMAIL:{FirebaseAuth.GetUserEmail(this.name, "Y", "X").Replace(".", "_")}");
+        //FirebaseFunctions.PrintToAlert($"USER: {FirebaseAuth.GetUser(this.name, "Y", "X").Replace(".", "_")}\nEMAIL:{FirebaseAuth.GetUserEmail(this.name, "Y", "X").Replace(".", "_")}");
+        FirebaseFunctions.PrintToAlert(userName);
     }
 
     public void SetUserName(string name)
     {
         userName = userName;
     }
-    #else
+#else
     private DatabaseReference dbr;
     void Start()
     {
@@ -47,27 +48,30 @@ public class FBProfileManager : MonoBehaviour
         foreach (Transform child in content) children.Add(child.gameObject);
         children.ForEach(child => Destroy(child));
         */
-        #if (UNITY_WEBGL && !UNITY_EDITOR)
-        FirebaseDatabase.GetJSON(userName, this.gameObject.name, "ParseUserData", "Failure");
-        #else
+#if (UNITY_WEBGL && !UNITY_EDITOR)
+        FirebaseDatabase.GetJSON($"DATA/{userName}", this.gameObject.name, "ParseUserData", "Failure");
+#else
         StartCoroutine(DisplayGraph());
         #endif
     }
 
-    #if (UNITY_WEBGL && !UNITY_EDITOR)
+#if (UNITY_WEBGL && !UNITY_EDITOR)
     public void ParseUserData(string json)
     {
         var snapshot = JSON.Parse(json);
         FirebaseWebGL.Scripts.FirebaseBridge.FirebaseFunctions.PrintToAlert("Full User Data: " + snapshot.ToString());
         foreach (var date in snapshot.Keys){
+            int totalsteps = 0;
             foreach (var time in snapshot.Keys){
-                int totalsteps = 0;
                 foreach (var steps in snapshot.Keys){
                     //TODO: add currentsteps to totalsteps
                 }
             }
             //TODO: add date and totalsteps to dictionary
+            stepsDictionary[data.Key] = stepsTotal;
         }
+        onStepsUpdate?.Invoke();
+
     }
 
     public void Failure(string error)
