@@ -20,7 +20,7 @@ public class FirebaseLeaderboard : MonoBehaviour
     #else
     private DatabaseReference dbr;
 
-    async void Start()
+    void Start()
     {
         dbr = FirebaseDatabase.DefaultInstance.RootReference;
     }

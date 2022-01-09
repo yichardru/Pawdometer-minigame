@@ -34,6 +34,7 @@ public class GUIManager : MonoBehaviour {
 
 	public Text scoreTxt;
 	public Text moveCounterTxt;
+	public Text webGLMessage;
 
 	public UnityEvent OnGameOver;
 
@@ -56,17 +57,24 @@ public class GUIManager : MonoBehaviour {
     {
 		GameManager.instance.gameOver = true;
 		gameOverPanel.SetActive(true);
+		#if (UNITY_WEBGL && !UNITY_EDITOR)
+		webGLMessage.SetActive(true);
+		#endif
 
 		if(score > PlayerPrefs.GetInt("HighScore"))
         {
 			PlayerPrefs.SetInt("HighScore", score);
 			highScoreTxt.text = "New Best: " + PlayerPrefs.GetInt("HighScore").ToString();
+			#if (UNITY_WEBGL && !UNITY_EDITOR)
+			#else
 			StartCoroutine(GameObject.FindGameObjectWithTag("Bridge").GetComponent<DatabaseBridge>().ChangeHighScore(score));
+			#endif
         }
         else
         {
 			highScoreTxt.text = "Best: " + PlayerPrefs.GetInt("HighScore").ToString();
         }
+		
 		yourScoreTxt.text = score.ToString();
 		OnGameOver?.Invoke();
     }

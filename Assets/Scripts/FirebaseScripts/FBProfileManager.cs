@@ -23,9 +23,9 @@ public class FBProfileManager : MonoBehaviour
     public UnityEvent onStepsUpdate = new UnityEvent();
 #if (UNITY_WEBGL && !UNITY_EDITOR)
     void Start(){
-        FirebaseAuth.GetUser(this.name, "SetUserName", "X").Replace(".", "_");
+        FirebaseAuth.GetUser(this.name, "SetUserName", "Failure").Replace(".", "_");
         //FirebaseFunctions.PrintToAlert($"USER: {FirebaseAuth.GetUser(this.name, "Y", "X").Replace(".", "_")}\nEMAIL:{FirebaseAuth.GetUserEmail(this.name, "Y", "X").Replace(".", "_")}");
-        FirebaseFunctions.PrintToAlert(userName);
+        // FirebaseFunctions.PrintToAlert(userName);
     }
 
     public void SetUserName(string name)
@@ -62,13 +62,17 @@ public class FBProfileManager : MonoBehaviour
         FirebaseWebGL.Scripts.FirebaseBridge.FirebaseFunctions.PrintToAlert("Full User Data: " + snapshot.ToString());
         foreach (var date in snapshot.Keys){
             int totalsteps = 0;
-            foreach (var time in snapshot.Keys){
-                foreach (var steps in snapshot.Keys){
+            foreach (var time in snapshot[date].Keys){
+                foreach (var steps in snapshot[date][time].Keys){
                     //TODO: add currentsteps to totalsteps
+                    if(int.TryParse(steps, out int numSteps))
+                    {
+                        totalsteps += numSteps;
+                    }
                 }
             }
             //TODO: add date and totalsteps to dictionary
-            stepsDictionary["DATA GOES HERE"] = totalsteps;
+            stepsDictionary[date] = totalsteps;
         }
         onStepsUpdate?.Invoke();
 

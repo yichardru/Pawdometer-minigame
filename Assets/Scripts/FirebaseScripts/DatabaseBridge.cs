@@ -1,28 +1,33 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-#if UNITY_WEBGL
+#if (UNITY_WEBGL && !UNITY_EDITOR)
+using FirebaseWebGL.Scripts.FirebaseBridge;
+using FirebaseWebGL.Scripts.Objects;
 #else
 using Firebase.Database;
 using Firebase.Auth;
 #endif
+using SimpleJSON;
 
 public class DatabaseBridge : MonoBehaviour
 {
-    #if UNITY_WEBGL
-    public IEnumerator ChangeHighScore(int score)
-    {
-        yield return null;
-    }
+    public static int currentHighScore;
+
+    #if (UNITY_WEBGL && !UNITY_EDITOR)
+    public string userName = "testingacc3@abc_com";
     #else
     private DatabaseReference dbr;
-    public static int currentHighScore;
     public FirebaseUser user;
     private string userName => user.Email.Replace(".", "_");
     private static bool isCurrentlyReading = false;
-
-    async void Start()
+    #endif
+     void Start()
     {
+        #if (UNITY_WEBGL && !UNITY_EDITOR)
+        FirebaseAuth.GetUser(this.name, "SetUserName", "Failure").Replace(".", "_");
+        FirebaseFunctions.PrintToAlert(userName);
+        #else
         user = FirebaseAuth.DefaultInstance.CurrentUser;
         //Debug.Log(userName);
         dbr = FirebaseDatabase.DefaultInstance.RootReference;
@@ -31,10 +36,21 @@ public class DatabaseBridge : MonoBehaviour
         {
             StartCoroutine(GetHighScore());
         }
+        #endif
     }
+
+    #if (UNITY_WEBGL && !UNITY_EDITOR)
+    public void SetUserName(string name)
+    {
+        userName = userName;
+    }
+    #endif
 
     public IEnumerator GetHighScore(string user = "")
     {
+        #if (UNITY_WEBGL && !UNITY_EDITOR)
+        yield return null;
+        #else
         isCurrentlyReading = true;
         var task = dbr.GetValueAsync();
         yield return new WaitUntil(predicate: () => task.IsCompleted);
@@ -54,11 +70,14 @@ public class DatabaseBridge : MonoBehaviour
             }
         }
         print(currentHighScore);
-        
+        #endif
     }
 
     public IEnumerator ChangeHighScore(int newScore)
     {
+        #if (UNITY_WEBGL && !UNITY_EDITOR)
+        yield return null;
+        #else
         while(isCurrentlyReading)
         {
             yield return new WaitForSecondsRealtime(0.25f);
@@ -76,11 +95,11 @@ public class DatabaseBridge : MonoBehaviour
             }
             StartCoroutine(GetHighScore());
         }
+        #endif
     }
 
     public float GetComboValue(int dayRange = 1)
     {
         return 0;
     }
-    #endif
 }
