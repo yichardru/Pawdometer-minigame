@@ -89,13 +89,13 @@ public class ProfileDisplay : MonoBehaviour
     void success(string output)
     {
         //FirebaseWebGL.Scripts.FirebaseBridge.FirebaseFunctions.PrintToAlert(output);
-        FirebaseWebGL.Scripts.FirebaseBridge.FirebaseFunctions.PrintToConsole(output);
+        // FirebaseWebGL.Scripts.FirebaseBridge.FirebaseFunctions.PrintToConsole(output);
 
     }
     void failure(string output)
     {
-        FirebaseWebGL.Scripts.FirebaseBridge.FirebaseFunctions.PrintToAlert(output);
-        FirebaseWebGL.Scripts.FirebaseBridge.FirebaseFunctions.PrintToConsole(output);
+        // FirebaseWebGL.Scripts.FirebaseBridge.FirebaseFunctions.PrintToAlert(output);
+        // FirebaseWebGL.Scripts.FirebaseBridge.FirebaseFunctions.PrintToConsole(output);
     }
     #endif
 }

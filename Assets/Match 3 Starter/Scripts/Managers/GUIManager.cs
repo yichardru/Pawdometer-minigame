@@ -58,7 +58,7 @@ public class GUIManager : MonoBehaviour {
 		GameManager.instance.gameOver = true;
 		gameOverPanel.SetActive(true);
 		#if (UNITY_WEBGL && !UNITY_EDITOR)
-		webGLMessage.SetActive(true);
+		webGLMessage.gameObject.SetActive(true);
 		#endif
 
 		if(score > PlayerPrefs.GetInt("HighScore"))

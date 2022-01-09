@@ -15,7 +15,7 @@ public class DatabaseBridge : MonoBehaviour
     public static int currentHighScore;
 
     #if (UNITY_WEBGL && !UNITY_EDITOR)
-    public string userName = "testingacc3@abc_com";
+    private string userName = "testingacc3@abc_com";
     #else
     private DatabaseReference dbr;
     public FirebaseUser user;
@@ -25,8 +25,8 @@ public class DatabaseBridge : MonoBehaviour
      void Start()
     {
         #if (UNITY_WEBGL && !UNITY_EDITOR)
-        FirebaseAuth.GetUser(this.name, "SetUserName", "Failure").Replace(".", "_");
-        FirebaseFunctions.PrintToAlert(userName);
+        FirebaseAuth.GetUser(this.name, "SetUserName", "Failure");
+        // FirebaseFunctions.PrintToAlert(userName);
         #else
         user = FirebaseAuth.DefaultInstance.CurrentUser;
         //Debug.Log(userName);
@@ -42,7 +42,10 @@ public class DatabaseBridge : MonoBehaviour
     #if (UNITY_WEBGL && !UNITY_EDITOR)
     public void SetUserName(string name)
     {
-        userName = userName;
+        userName = name.Replace(".", "_");
+    }
+        public void Failure(string name)
+    {
     }
     #endif
 

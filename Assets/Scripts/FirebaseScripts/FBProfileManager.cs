@@ -59,7 +59,7 @@ public class FBProfileManager : MonoBehaviour
     public void ParseUserData(string json)
     {
         var snapshot = JSON.Parse(json);
-        FirebaseWebGL.Scripts.FirebaseBridge.FirebaseFunctions.PrintToAlert("Full User Data: " + snapshot.ToString());
+        // FirebaseWebGL.Scripts.FirebaseBridge.FirebaseFunctions.PrintToAlert("Full User Data: " + snapshot.ToString());
         foreach (var date in snapshot.Keys){
             int totalsteps = 0;
             foreach (var time in snapshot[date].Keys){
@@ -80,7 +80,7 @@ public class FBProfileManager : MonoBehaviour
 
     public void Failure(string error)
     {
-        FirebaseFunctions.PrintToAlert(error);
+        // FirebaseFunctions.PrintToAlert(error);
     }
 
 
